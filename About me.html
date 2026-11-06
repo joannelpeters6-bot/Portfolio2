@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title> About Me </title>
+    
+    
+</head>
+<body>
+<div id ="div0" align="center">
+    <table>
+        <tr>
+            <th><a href="Portfolio2.html"><button class="home">Home</button> </a> </th>
+            <th><a href="Resume.html"><button class="resume">Recruiter View</button> </a> </th>
+            <th><a href="contact.html"><button class="contact">Contact</button> </a>  </th>
+        </tr>
+    </table>
+</div>
+<div id="div1">
+    <p class="class1"><span id="tagline">I make numbers tell a story</span><span class="cursor">|</span><span class="sparkle">✦</span></p>
+
+<img class="welcome" src="Welcome.gif" width="155px" height="156px">
+</div>
+
+<div id="div2">
+</br>
+
+    <p class="class2">
+        After 4 years working in operations, I took a chance and committed to a full-time 
+        career development experience as a Business Operations and Insights Specialist.
+        In the 12-month duration of this Rotation Gig, I investigated the drivers behind 
+        patterns and anomalies in data. To do this, I ran reports, learned historical trends,
+        and worked with a global team to get to know the data well enough to share and assist business leaders
+        with strategic decision making.
+    </br>
+    </br>
+        Continuous learning and a passion for solving problems sums up my career. I began in customer service and 
+        progressively advanced learning different areas of the business. With a bachelor's degree in Communication Studies
+        and a graduate certificate in Information Technology, I bring a unique combination of analytical thinking, technical skills,
+        and communicating across barriers. 
+    </br>
+    </br>
+        Cultural awareness and intercultural connection is also very important to me. My experience studying abroad to Spain and Costa Rica 
+        helped shape my professional perspective. More recently, in the past 4 years, I had the pleasure of working with colleagues in Amsterdam, Sao Paulo, 
+        and Malaysia. Collaborating within a global team has brought diverse perspectives, solutions, and connections that enrich our 
+        business. I'm looking forward to continue growing as a Data Analyst, combining technical skill with business experience, and 
+        global mindset to transform data into actionable insights and meaningful solutions.
+    </p>
+</br>
+    <table class="table2">
+        <tr>
+            <td class="stat" data-target="31">31</td>
+            <td class="stat" data-target="25">25</td>
+            <td class="stat" data-target="04">04</td>
+        </tr>
+        <tr>
+            <td> Recurring Reports </td>
+            <td> Self-Service Dashboards </td>
+            <td> Regions across the globe</td>
+        </tr>
+    </table>
+    <p class="class3">
+        What I care about: Finding the story within the numbers, understanding the why before building the what, working clearly and mindfully
+    </p>
+</div>
+
+<div id="div3" align="center">
+    <h1>Projects</h1>
+</br>
+<div class="thumbnails">
+    <img class="thumb active" src="Refund.jpg" alt="Project 1" />
+    <img class="thumb" src="Escalation.jpg" alt="Project 2" />
+    <img class="thumb" src="Bulk Upload.jpg" alt="Project 3" />
+    <img class="thumb" src="Presentation.jpg" alt="Project 4" />
+   
+</div>
+ <div class="preview" align="center">
+    <img id="preview" src="Refund.jpg" alt="Project preview" />
+    </div>
+    <p class="hint">Ask me more about my projects!</p>
+</div>
+
+<!-- Full-screen view, shown when the big image is clicked -->
+<div id="lightbox">
+    <img id="lightbox-img" src="" alt="Enlarged project" />
+</div>
+
+<script>
+    // 1. Typewriter effect for the tagline
+    const tagline = document.getElementById('tagline');
+    const fullText = tagline.textContent;
+    tagline.textContent = '';
+    let letter = 0;
+    function typeNext() {
+        if (letter < fullText.length) {
+            tagline.textContent += fullText.charAt(letter);
+            letter++;
+            setTimeout(typeNext, 70);
+        }
+    }
+    typeNext();
+
+    // 2. Stats count up from 0 when they scroll into view
+    function countUp(cell) {
+        const target = cell.dataset.target;           // e.g. "04"
+        const end = parseInt(target, 10);
+        const width = target.length;                  // keeps the leading zero
+        const duration = 1200;
+        const start = performance.now();
+        function step(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const value = Math.round(end * progress);
+            cell.textContent = String(value).padStart(width, '0');
+            if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+    const statObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                countUp(entry.target);
+                statObserver.unobserve(entry.target);  // only run once
+            }
+        });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.stat').forEach(function (cell) {
+        cell.textContent = '0'.padStart(cell.dataset.target.length, '0');
+        statObserver.observe(cell);
+    });
+
+    // 3. Project gallery: hover/click to preview, arrow keys to move
+    const thumbs = document.querySelectorAll('.thumb');
+    const preview = document.getElementById('preview');
+    let current = 0;
+    function showImage(index) {
+        if (index === current) return;
+        current = (index + thumbs.length) % thumbs.length;   // wrap around
+        preview.classList.add('fading');
+        setTimeout(function () {
+            preview.src = thumbs[current].src;
+            preview.classList.remove('fading');
+        }, 200);
+        thumbs.forEach(function (t) { t.classList.remove('active'); });
+        thumbs[current].classList.add('active');
+    }
+    thumbs.forEach(function (thumb, i) {
+        thumb.addEventListener('mouseover', function () { showImage(i); });
+        thumb.addEventListener('click', function () { showImage(i); });
+    });
+
+    // 4. Click the big image to open it full screen
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    preview.addEventListener('click', function () {
+        lightboxImg.src = preview.src;
+        lightbox.classList.add('open');
+    });
+    lightbox.addEventListener('click', function () {
+        lightbox.classList.remove('open');
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') showImage(current + 1);
+        if (e.key === 'ArrowLeft')  showImage(current - 1);
+        if (e.key === 'Escape')     lightbox.classList.remove('open');
+        if (lightbox.classList.contains('open')) lightboxImg.src = thumbs[current].src;
+    });
+</script>
+</body>
+
+<style type="text/css">
+    body {
+    margin: 0;
+    padding: 0;
+    }
+    #div0 {
+        
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    table{
+        text-align: center;
+    }
+    th{
+        padding: 15px;
+        width: 100%;
+    }
+    .home, .resume, .contact {
+        padding-left: 50px;
+        padding-right: 50px;
+        font-family: 'Courier New', Courier, monospace;
+        color: black;
+        cursor: pointer;
+        transition: all 1s ease-in-out;
+
+    }
+    .home:hover, .resume:hover, .contact:hover{
+        background: black;
+    }
+    #div1 {
+        
+        height: fit-content;
+        min-height: 156px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 0;
+        position: relative;
+    }
+    .class1 {
+        font-family:'Courier New', Courier, monospace;
+        font-size: 30px;
+        margin-top: 50px;
+        flex: 1;
+        text-align: center;
+
+    }
+    .table2{
+        width: 60%;
+        margin: 0 auto;
+        table-layout: fixed;
+        text-align: center;
+        border-collapse: collapse;
+    }
+    .table2 td {
+        width: 33.33%;
+        text-align: center;
+        padding: 5px;
+    }
+    .stat {
+        font-size: 50px;
+    }    
+    
+    .welcome{
+        display: block;
+    }
+    #div2 {
+        
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        display: block;
+        text-align: center;
+    }
+    .class2 {
+        margin: 0px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        size: 30px;
+        text-align: center;
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+   
+    .class3{
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 25px;
+        font-style: italic;
+        text-align: center;
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+    .sparkle{
+        display: inline-block;
+        font-size: 14px;
+        color: black;
+        opacity: 0;
+        margin-left: 5px;
+        transform: scale(0) rotate(0deg);
+        transition: all 0.3s ease-in-out;
+        vertical-align: middle;
+        animation: twinkleLoop 1s ease-in-out infinite;
+    }
+    @keyframes twinkleLoop {
+    0% {
+        opacity: 0;
+        transform: scale(0.2) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.3) rotate(180deg);
+        /* Gives it a crisp, elegant neon text reflection */
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.3); 
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.2) rotate(360deg);
+    }
+    }
+    .thumbnails img {
+        height: 80px;
+        border: 4px solid #555;
+        padding: 1px;
+        margin: 0 10px 10px 0;
+    }
+    .thumbnails img {
+        cursor: pointer;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .thumbnails img:hover{
+        border: 4px solid #00ccff;
+        transform: translateY(-4px);
+    }
+    .thumbnails img.active {
+        border-color: black;
+    }
+    .preview img{
+        border: 4px solid #444;
+        padding: 1px;
+        width: 800px;
+        max-width: 95%;
+        cursor: zoom-in;
+        transition: opacity 0.2s ease;
+    }
+    .preview img.fading {
+        opacity: 0;
+    }
+    .hint {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13px;
+        color: #555;
+    }
+
+    /* blinking typewriter cursor */
+    .cursor {
+        animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+
+    /* stats grow slightly on hover */
+    .stat {
+        transition: transform 0.3s ease;
+    }
+    .stat:hover {
+        transform: scale(1.15);
+    }
+
+    /* full-screen image viewer */
+    #lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        justify-content: center;
+        align-items: center;
+        cursor: zoom-out;
+        z-index: 10;
+    }
+    #lightbox.open {
+        display: flex;
+    }
+    #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 4px solid white;
+    }
+</style>
+</html>
