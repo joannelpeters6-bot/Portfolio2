@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+# Serve the portfolio home page at the site root
+[[redirects]]
+  from = "/"
+  to = "/Portfolio2.html"
+  status = 200
