@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JoAnne Peters</title>
+
+<style type="text/css">
+
+    body{
+        cursor: crosshair;
+        min-height: 100vh;
+        min-height: 100dvh;
+        margin: 0;
+    }
+
+    .front-text{
+        font-family: 'Times New Roman', Times, serif;
+        letter-spacing: -1px;
+        color: black;
+        text-align: center;
+        font-size: clamp(40px, 11vw, 90px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        display: inline-block;
+        transition: color 1s ease-in-out;
+        white-space: nowrap;
+        transform: translate(-50%, -50%);
+    }
+    .front-text::after{
+        content: attr(data-hover);
+        position: absolute;
+        color: black;
+        font-size: clamp(16px, 3.5vw, 30px);
+        left: 0;
+        top: 0;
+        padding-top: 10mm;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+    .front-text:hover{
+        color: rgba(0, 0, 0, 0);
+        cursor: pointer;
+    }
+
+    .front-text:hover::after{
+        opacity: 1;
+    }
+    .corner{
+        position: fixed;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: clamp(14px, 2.5vw, 30px);
+        color: rgb(51, 50, 50);
+        z-index: 10;
+        padding: clamp(10px, 2vw, 17px);
+    }
+
+    .topl-role{
+        top: 0;
+        left: 0;
+    }
+    .topr-location{
+        top: 0;
+        right: 0;
+    }
+    .bottoml-resume{
+        bottom: 0;
+        left: 0;
+    }
+    .bottomr-contact{
+        bottom: 0;
+        right: 0;
+    }
+    .sparkle{
+        display: inline-block;
+        font-size: 14px;
+        color: black;
+        opacity: 0;
+        margin-left: 5px;
+        transform: scale(0) rotate(0deg);
+        transition: all 0.3s ease-in-out;
+        vertical-align: middle;
+    }
+    .corner:hover .sparkle{
+        animation: twinkleLoop 1.4s infinite ease-in-out;
+    }
+    @keyframes twinkleLoop {
+        0% {
+            opacity: 0;
+            transform: scale(0.2) rotate(0deg);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.3) rotate(180deg);
+            /* Gives it a crisp, elegant neon text reflection */
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.2) rotate(360deg);
+        }
+    }
+    a:link {
+        color: black;
+        text-decoration: none;
+    }
+    a:visited {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* Touchscreens: no hover, so show the tagline under the name */
+    @media (hover: none) {
+        .front-text,
+        .front-text:hover { color: black; }
+        .front-text::after {
+            opacity: 1;
+            position: static;
+            display: block;
+            padding-top: 4mm;
+        }
+        .sparkle {
+            animation: twinkleLoop 1.4s infinite ease-in-out;
+        }
+    }
+
+    /* Small screens: allow wrapping and keep text on screen */
+    @media (max-width: 600px) {
+        .front-text {
+            white-space: normal;
+            width: 90vw;
+        }
+        .front-text::after {
+            white-space: normal;
+        }
+        .corner {
+            max-width: 45vw;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div id="link">
+    <a href="About me.html" class="text-link">
+    <div class="front-text" data-hover="I analyze, problem solve, and design solutions.">JoAnne  Peters</div>
+    </a>
+</div>
+
+<div class="corner topl-role">
+    Data Analyst<span class="sparkle">✦</span></div>
+
+<div class="corner topr-location">Springfield, MO<span class="sparkle">✦</span></div>
+<div class="corner bottoml-resume"><a href="Resume.html">
+    Skip straight to Resume<span class="sparkle">✦</span></a></div>
+<div class="corner bottomr-contact"><a href="contact.html">
+    Let's Connect<span class="sparkle">✦</span></a></div>
+
+</body>
+</html>
